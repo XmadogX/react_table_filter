@@ -1,5 +1,5 @@
 const propsValues = {
-    title: "Table",
+    head:["Number","Name","Theme","Exemple"],
     table:[
         ["№1","First","First Theme","Exemple first"],
         ["№2","Second","Second Theme","Exemple first"],
@@ -31,15 +31,15 @@ class SearchPlugin extends React.Component{
     }
              
     render() {
-        return <input placeholder={this.props.number} onChange={this.onTextChanged} />;
+        return <input placeholder={`Search ${this.props.name}`} onChange={this.onTextChanged} />;
     }
 }
                   
 class ItemsList extends React.Component {
     constructor(props){
         super(props);
-        this.state = { table: this.props.data.table};
-                          
+        this.state = {table: this.props.data.table, head: this.props.data.head};
+
         this.filterList = this.filterList.bind(this);
     }
              
@@ -54,15 +54,26 @@ class ItemsList extends React.Component {
         return(
             <table>
                 <thead>
-                    {
-                        this.state.table[0].map((rows, index)=>{
-                            return (
-                                <th>
-                                    <SearchPlugin filter={this.filterList} number= {index} />
-                                </th>
+                    <tr>
+                        {
+                            this.state.head.map((row)=>{
+                                return (
+                                    <th>{row}</th>
                                 );
-                        })
-                    }
+                            })
+                        }
+                    </tr>
+                    <tr>
+                        {
+                            this.state.head.map((row, index)=>{
+                                return (
+                                    <th>
+                                        <SearchPlugin filter={this.filterList} number= {index} name ={row}/>
+                                    </th>
+                                    );
+                            })
+                        }
+                    </tr>
                 </thead>
                 <tbody>
                     {

@@ -9,7 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var propsValues = {
-    title: "Table",
+    head: ["Number", "Name", "Theme", "Exemple"],
     table: [["№1", "First", "First Theme", "Exemple first"], ["№2", "Second", "Second Theme", "Exemple first"], ["№3", "Three", "test2", "test2"], ["№4", "Four", "test3", "test3"]]
 };
 
@@ -59,7 +59,7 @@ var SearchPlugin = function (_React$Component2) {
     }, {
         key: "render",
         value: function render() {
-            return React.createElement("input", { placeholder: this.props.number, onChange: this.onTextChanged });
+            return React.createElement("input", { placeholder: "Search " + this.props.name, onChange: this.onTextChanged });
         }
     }]);
 
@@ -74,7 +74,7 @@ var ItemsList = function (_React$Component3) {
 
         var _this3 = _possibleConstructorReturn(this, (ItemsList.__proto__ || Object.getPrototypeOf(ItemsList)).call(this, props));
 
-        _this3.state = { table: _this3.props.data.table };
+        _this3.state = { table: _this3.props.data.table, head: _this3.props.data.head };
 
         _this3.filterList = _this3.filterList.bind(_this3);
         return _this3;
@@ -99,13 +99,28 @@ var ItemsList = function (_React$Component3) {
                 React.createElement(
                     "thead",
                     null,
-                    this.state.table[0].map(function (rows, index) {
-                        return React.createElement(
-                            "th",
-                            null,
-                            React.createElement(SearchPlugin, { filter: _this4.filterList, number: index })
-                        );
-                    })
+                    React.createElement(
+                        "tr",
+                        null,
+                        this.state.head.map(function (row) {
+                            return React.createElement(
+                                "th",
+                                null,
+                                row
+                            );
+                        })
+                    ),
+                    React.createElement(
+                        "tr",
+                        null,
+                        this.state.head.map(function (row, index) {
+                            return React.createElement(
+                                "th",
+                                null,
+                                React.createElement(SearchPlugin, { filter: _this4.filterList, number: index, name: row })
+                            );
+                        })
+                    )
                 ),
                 React.createElement(
                     "tbody",
